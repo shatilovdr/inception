@@ -1,5 +1,14 @@
-FROM alpine:3.19
+FROM alpine:3.20
 
-RUN apk update
+RUN apk update && \
+    apk upgrade
 
-ENTRYPOINT [ "bash" ]
+RUN apk add nginx \
+            openssl
+
+WORKDIR /nginx_42
+COPY tools .
+COPY conf /etc/nginx/http.d
+RUN ./initscript.sh
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
