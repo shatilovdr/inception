@@ -8,9 +8,6 @@ RUN apk update && \
         php83-phar \
         php83-mysqli \
         php83-curl \
-        php83-json \
-        php83-openssl \
-        php83-xml \
         php83-mbstring \
         php83-tokenizer \
         php83-iconv \
@@ -26,4 +23,4 @@ RUN ./install.sh
 
 EXPOSE 9000
 
-ENTRYPOINT [ "sh", "entrypoint.sh" ]
+ENTRYPOINT [ "sh", "entrypoint.sh" ]    

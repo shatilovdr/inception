@@ -18,13 +18,14 @@ services:
         volumes:
             - wp:/var/www/html
         environment:
+            DOMAIN_NAME: ${DOMAIN_NAME}
             WP_TITLE: ${WP_TITLE}
             WP_ADMIN: ${WP_ADMIN}
             WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
             WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
             WP_USER: ${WP_USER}
-            WP_USER_EMAIL: ${WP_USER_EMAIL}
             WP_USER_PASSWORD: ${WP_USER_PASSWORD}
+            WP_USER_EMAIL: ${WP_USER_EMAIL}
             DB_HOSTNAME: ${DB_HOSTNAME}
             DB_NAME: ${DB_NAME}
             DB_USER: ${DB_USER}
@@ -32,8 +33,7 @@ services:
         networks:
             - inception-network
         depends_on:
-            mariadb:
-                condition: service_healthy
+            - mariadb
         restart: always
 
     mariadb:
@@ -47,12 +47,8 @@ services:
             DB_PASSWORD: ${DB_PASSWORD}
         networks:
             - inception-network
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            interval: 10s
-            timeout: 5s
-            retries: 5
         restart: always
+
 
 volumes:
     db:
